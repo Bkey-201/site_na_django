@@ -1,14 +1,27 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Task
-
+from .forms import TaskForm
 
 def index(request):
     tasks = Task.objects.order_by('-id')
-    return render(request,'main1/index.html', { 'title': 'Главаня страница сайта', 'tasks': tasks  })
+    return render(request,'main1/index.html', { 'title': 'Главаня страница сайта', 'tasks': tasks })
 
 def about(request):
     return render(request,'main1/about.html')
 
 
 def create(request):
-    return render(request,'main1/create.html')
+    #error = ''
+    # if request.method == 'POST':
+    #     form TaskForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         redirect ('home')
+    #         else:
+    #         error = 'Form ne veren'
+    form = TaskForm()
+    context = {
+        'form': form,
+        'error': error
+    }
+    return render(request,'main1/create.html', context)
